@@ -1,3 +1,29 @@
 page-gpl {
-
+    .complaintsHeader{
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        padding: 10px;
+        background: #e6e6e6;
+        font-size: 16px;
+        color: #000;
+        vertical-align: baseline;
+        text-align: justify;
+        font-family: Roboto, sans-serif;
+    }
+    .complaintsCard{
+        margin-left: 5%;
+        margin-right: 5%;
+        width : 90%;
+    }
+    .gLink{
+        background-color: #cccccc;
+        height: 1.5em;
+        p{
+            font-size: 14px;
+            color: #000;
+            vertical-align: baseline;
+            text-align: justify;
+            font-family: Roboto, sans-serif;
+        }
+    }
 }

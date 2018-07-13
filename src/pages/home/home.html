@@ -1,18 +1,73 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content class="bodyBack" >
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4 >
+        <img class="logo" src="assets/imgs/public.png"/>
+      </ion-col>
+      <ion-col col-4 >
+        <img src="assets/imgs/gandhi.png"/>
+      </ion-col>
+      <ion-col col-4 >
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+<ion-toolbar color="primary">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="menuItem" (click)="gtHome()" >
+        HOME
+      </ion-col>
+      <ion-col class="menuItem" (click)="gtComplaints()" >
+        COMPLAINTS
+      </ion-col>
+      <ion-col class="menuItem" (click)="gtGovtDep()" >
+        GOVT.DEPARTMENT LINKS
+      </ion-col>
+      <ion-col class="menuItem" (click)="gtNetaji()" >
+        NETAJI SPEAKS
+      </ion-col>
+      <ion-col class="menuItem" (click)="gtYourArea()" >
+        YOUR AREA NEWS
+      </ion-col>
+      <ion-col class="menuItem" (click)="gtContact()" >
+        CONTACT
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-toolbar>
+
+<ion-grid>
+  <ion-row>
+    <ion-col col-3 >
+      <ion-card>
+          <ion-item color="authHead">Authority</ion-item>
+          <ion-list  >
+            <ion-item class="authSub"  *ngFor="let authoriti of authorities">{{authoriti.Authority}} </ion-item>
+        </ion-list>
+      </ion-card>
+    </ion-col>
+    <ion-col col-6 >
+      <ion-card class="videoCard" >
+          <video height="300px" width="100%" controls autoplay>
+            <source src="assets/imgs/91.mp4" type="video/mp4" >
+          </video>
+      </ion-card>
+    </ion-col>
+    <ion-col col-3 >
+      <ion-card>
+        <ion-card-content>
+
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+
 </ion-content>
+

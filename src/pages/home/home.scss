@@ -1,3 +1,9 @@
 page-home {
-
+.authSub{
+    background-color: map-get($colors,authSub);
+    border-bottom: 1px white solid;
+}
+.videoCard{
+    background-color: black;
+}
 }

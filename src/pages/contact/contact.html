@@ -1,18 +1,86 @@
-<!--
-  Generated template for the ContactPage page.
+<ion-content class="bodyBack" >
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4 >
+          <img class="logo" src="assets/imgs/public.png"/>
+        </ion-col>
+        <ion-col col-4 >
+          <img src="assets/imgs/gandhi.png"/>
+        </ion-col>
+        <ion-col col-4 >
+  
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
+  <ion-toolbar color="primary">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="menuItem" (click)="gtHome()" >
+          HOME
+        </ion-col>
+        <ion-col class="menuItem" (click)="gtComplaints()" >
+          COMPLAINTS
+        </ion-col>
+        <ion-col class="menuItem" (click)="gtGovtDep()" >
+          GOVT.DEPARTMENT LINKS
+        </ion-col>
+        <ion-col class="menuItem" (click)="gtNetaji()" >
+          NETAJI SPEAKS
+        </ion-col>
+        <ion-col class="menuItem" (click)="gtYourArea()" >
+          YOUR AREA NEWS
+        </ion-col>
+        <ion-col class="menuItem" (click)="gtContact()" >
+          CONTACT
+        </ion-col>
+  
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  
+<ion-card class="complaintsCard" >
+  <ion-card-content>
+    <div class="complaintsHeader">Contact Us</div>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+          <ion-item>
+            <ion-label color="dark" stacked>Name</ion-label>
+            <ion-input type="text" placeholder="Name" autofocus class="inputC" [(ngModel)]="Name"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="dark" stacked>Email</ion-label>
+            <ion-input type="email" placeholder="Email" class="inputC" [(ngModel)]="Email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked color="dark">Phone No</ion-label>
+            <ion-input type="tel" placeholder="PhoneNo" class="inputC" [(ngModel)]="PhoneNo"></ion-input>
+          </ion-item>
+          <button ion-button [disabled]="!Name||!Email||!PhoneNo||!Comments" (click)="sendContactUs()" >Submit</button>
+          </ion-col>
+          <ion-col col-4>
+          <ion-item>
+            <ion-label stacked color="dark">Comments</ion-label>
+            <ion-textarea [(ngModel)]="Comments" class="inputC" placeholder="Enter Comments Here"  ></ion-textarea>
+          </ion-item>
+        </ion-col>
+        <ion-col col-2>
+          <div class="cCenter">
+          <h2 ion-text color="primary">Get In Touch</h2>
 
-  <ion-navbar>
-    <ion-title>contact</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-</ion-content>
+          <p><strong>Public Grievences</strong></p>
+          <p>Hyderabad,</p>
+          <p>info@publicg.in</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>  
+  
+  
+  </ion-content>
+  
+  
