@@ -58,6 +58,8 @@ clearData(){
   
 }
 
+gtLogin(){this.navCtrl.setRoot("LoginPage");}
+gtSignUp(){this.navCtrl.setRoot("SignUpPage");}
 
   
   gtHome(){this.navCtrl.setRoot("HomePage");}

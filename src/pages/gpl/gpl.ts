@@ -44,7 +44,9 @@ export class GplPage {
     "Uttarakhand",
     "West Bengal "
   ];
-
+  gtLogin(){this.navCtrl.setRoot("LoginPage");}
+  gtSignUp(){this.navCtrl.setRoot("SignUpPage");}
+  
   gtHome(){this.navCtrl.setRoot("HomePage");}
   gtComplaints(){this.navCtrl.setRoot("ComplaintsPage");}
   gtGovtDep(){this.navCtrl.setRoot("GplPage");}

@@ -6,10 +6,10 @@ import * as firebase from 'firebase';
 
 @IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-login',
+  templateUrl: 'login.html',
 })
-export class HomePage {
+export class LoginPage {
 
   authorityRef = firebase.database().ref("Authorities");
   authorities : Array<any> = [];
@@ -44,11 +44,6 @@ getAuthorities(){
   }) ;
 
 }
-
-uploadHere(){
-  this.navCtrl.setRoot("UploadPage");
-}
-
 
 gtLogin(){this.navCtrl.setRoot("LoginPage");}
 gtSignUp(){this.navCtrl.setRoot("SignUpPage");}

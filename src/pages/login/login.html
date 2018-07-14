@@ -11,11 +11,11 @@
         <ion-col col-4 >
           <ion-row>
             <ion-buttons end>
-            <button ion-button clear color="dark" (click)="gtSignUp()" >
+            <button ion-button clear color="dark">
               <ion-icon name="ios-share-outline"></ion-icon>
               Sign Up
             </button>
-            <button ion-button clear color="dark" (click)="gtLogin()" >
+            <button ion-button clear color="dark">
               <ion-icon name="person"></ion-icon>
               Login
             </button>
@@ -33,7 +33,7 @@
           <ion-row>
             <ion-input type="text" placeholder="Area Name" [(ngModel)]="AreaName" class="mainSearchBar" ></ion-input>
           </ion-row>
-          </ion-col>
+        </ion-col>
       </ion-row>
     </ion-grid>
   
@@ -63,21 +63,49 @@
     </ion-grid>
   </ion-toolbar>
   
-<ion-card class="complaintsCard" >
-  <ion-card-content>
-    <div class="complaintsHeader">GOVERNMENT DEPARTMENT LINKS</div>
-    <ion-grid>
-      <ion-row>
-        <ion-col col-3 *ngFor="let link of links" >
-          <ion-item class="gLink">
-            <p item-start>{{link}}</p>
-            <ion-icon name="share-alt" item-end ></ion-icon>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-3 >
+        <ion-card>
+            <ion-item color="authHead">Authority</ion-item>
+            <ion-list  >
+              <ion-item class="authSub"  *ngFor="let authoriti of authorities">{{authoriti.Authority}} </ion-item>
+          </ion-list>
+        </ion-card>
+        <ion-item>
+            <ion-label stacked color="dark">State</ion-label>
+            <ion-select placeholder="Select State" class="inputC" >
+            </ion-select>
           </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card-content>
-</ion-card>  
+          <ion-item>
+            <ion-label stacked color="dark">City</ion-label>
+            <ion-select placeholder="Select City" class="inputC" >
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked color="dark">State</ion-label>
+            <ion-select placeholder="Select Area" class="inputC" >
+            </ion-select>
+          </ion-item>
+          <button ion-button color="danger" block >Search</button>
+      </ion-col>
+      <ion-col col-6 >
+        <ion-card>
+        </ion-card>
+      </ion-col>
+      <ion-col col-3 >
+        <ion-card>
+          <ion-card-content>
+  
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <div class="footerBar">
+    <p>© Copy Rights Public Grievances . All Rights Are Reserved 2018</p>
+    </div>
+  </ion-grid>
+  
   
   
   </ion-content>

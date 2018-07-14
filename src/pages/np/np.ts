@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, IonicPage, ViewController, LoadingController } from 'ionic-angular';
+import * as firebase from 'firebase';
 
-/**
- * Generated class for the NpPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
+
+
+
 
 @IonicPage()
 @Component({
@@ -15,11 +14,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class NpPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad NpPage');
-  }
 
-}
+
+
+  
+  gtLogin(){this.navCtrl.setRoot("LoginPage");}
+  gtSignUp(){this.navCtrl.setRoot("SignUpPage");}
+  
+  gtHome(){this.navCtrl.setRoot("HomePage");}
+  gtComplaints(){this.navCtrl.setRoot("ComplaintsPage");}
+  gtGovtDep(){this.navCtrl.setRoot("GplPage");}
+  gtNetaji(){this.navCtrl.setRoot("NpPage");}
+  gtYourArea(){this.navCtrl.setRoot("YanPage");}
+  gtContact(){this.navCtrl.setRoot("ContactPage");}
+  }

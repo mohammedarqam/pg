@@ -1,0 +1,165 @@
+<ion-content class="bodyBack" >
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4 >
+          <img class="logo" src="assets/imgs/public.png"/>
+        </ion-col>
+        <ion-col col-4 >
+          <img src="assets/imgs/gandhi.png"/>
+        </ion-col>
+        <ion-col col-4 >
+          <ion-row>
+            <ion-buttons end>
+            <button ion-button clear color="dark">
+              <ion-icon name="ios-share-outline"></ion-icon>
+              Sign Up
+            </button>
+            <button ion-button clear color="dark">
+              <ion-icon name="person"></ion-icon>
+              Login
+            </button>
+            <button ion-button icon-only clear  color="gr" >
+              <ion-icon name="logo-facebook"></ion-icon>
+            </button>
+            <button ion-button icon-only clear  color="gr" >
+              <ion-icon name="logo-instagram"></ion-icon>
+            </button>
+            <button ion-button icon-only clear  color="gr" >
+              <ion-icon name="logo-twitter"></ion-icon>
+            </button>
+            </ion-buttons>
+          </ion-row>
+          <ion-row>
+            <ion-input type="text" placeholder="Area Name" [(ngModel)]="AreaName" class="mainSearchBar" ></ion-input>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
+  <ion-toolbar color="primary">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="menuItem" (click)="gtHome()" >
+          HOME
+        </ion-col>
+        <ion-col class="menuItem" (click)="gtComplaints()" >
+          COMPLAINTS
+        </ion-col>
+        <ion-col class="menuItem" (click)="gtGovtDep()" >
+          GOVT.DEPARTMENT LINKS
+        </ion-col>
+        <ion-col class="menuItem" (click)="gtNetaji()" >
+          NETAJI SPEAKS
+        </ion-col>
+        <ion-col class="menuItem" (click)="gtYourArea()" >
+          YOUR AREA NEWS
+        </ion-col>
+        <ion-col class="menuItem" (click)="gtContact()" >
+          CONTACT
+        </ion-col>
+  
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  
+  <ion-grid>
+    <ion-row>
+      <ion-col col-3 >
+        <ion-card>
+            <ion-item color="authHead">Authority</ion-item>
+            <ion-list  >
+              <ion-item class="authSub"  *ngFor="let authoriti of authorities">{{authoriti.Authority}} </ion-item>
+          </ion-list>
+        </ion-card>
+        <ion-item>
+            <ion-label stacked color="dark">State</ion-label>
+            <ion-select placeholder="Select State" class="inputC" >
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked color="dark">City</ion-label>
+            <ion-select placeholder="Select City" class="inputC" >
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked color="dark">State</ion-label>
+            <ion-select placeholder="Select Area" class="inputC" >
+            </ion-select>
+          </ion-item>
+          <button ion-button color="danger" block >Search</button>
+      </ion-col>
+      <ion-col col-6 >
+        <ion-card *ngIf="!verifyCard" >
+          <ion-card-content>
+            <ion-card-title color="primary">
+              New User Registrations
+            </ion-card-title>
+
+
+            <ion-item>
+              <ion-label fixed class="formLabel" >Username :</ion-label>
+              <ion-input type="text" class="inputC" [(ngModel)]="username"></ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label fixed class="formLabel" >Email</ion-label>
+              <ion-input type="email" class="inputC" [(ngModel)]="email"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label fixed class="formLabel" >Password</ion-label>
+              <ion-input type="password" class="inputC" [(ngModel)]="pass"></ion-input>
+            </ion-item>
+          
+            <ion-item>
+              <ion-label fixed class="formLabel" >Confirm Password</ion-label>
+              <ion-input type="password" class="inputC" [(ngModel)]="pass"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label fixed class="formLabel" >Phone Number</ion-label>
+              <ion-input type="tel" class="inputC" [(ngModel)]="PhoneNo"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label fixed class="formLabel" >Occupation</ion-label>
+              <ion-input type="text" class="inputC" [(ngModel)]="Occupation"></ion-input>
+            </ion-item>
+
+            <button ion-button (click)="signUp()">Sign Up</button>
+
+          </ion-card-content>
+        </ion-card>
+        <ion-card *ngIf="verifyCard" >
+            <ion-card-content>
+              <ion-card-title color="primary">
+                New User Registrations
+              </ion-card-title>
+            <ion-item>
+              <ion-label fixed class="formLabel" >Verify OTP</ion-label>
+              <ion-input type="number" class="inputC" [(ngModel)]="OTP"></ion-input>
+            </ion-item>
+
+            <button ion-button (click)="verify()">Verify</button>
+            </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+
+
+      <ion-col col-3 >
+        <ion-card>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <div class="footerBar">
+    <p>© Copy Rights Public Grievances . All Rights Are Reserved 2018</p>
+    </div>
+  </ion-grid>
+  
+  
+  
+  </ion-content>
+  
+  

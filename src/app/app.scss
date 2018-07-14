@@ -15,3 +15,30 @@
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+.mainSearchBar{
+    border: solid 1px black;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5%;
+}
+.footerBar{
+    background-color: #303030;
+    width: 100%;
+    padding-bottom: 5px;
+    border: 0;
+    font-size: 14px;
+    vertical-align: baseline;
+    text-align: justify;
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    color: #000;
+    font-weight: normal;
+    p{
+        padding-top: 15px;
+        padding-left: 10px;
+        font: 14px Helvetica, sans-serif;
+        text-align: center;
+        color: #dddcdc;
+        margin-bottom: 10px;
+    }
+}

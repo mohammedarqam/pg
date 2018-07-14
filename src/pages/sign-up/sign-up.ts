@@ -3,16 +3,25 @@ import { NavController, IonicPage, ViewController, LoadingController } from 'ion
 import * as firebase from 'firebase';
 
 
-
 @IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-sign-up',
+  templateUrl: 'sign-up.html',
 })
-export class HomePage {
+export class SignUpPage {
+
+  username : string;
+  email : string;
+  pass : string;
+  PhoneNo : string;
+  Occupation : string;
+
 
   authorityRef = firebase.database().ref("Authorities");
   authorities : Array<any> = [];
+
+  verifyCard : boolean = false;
+
 
   constructor(
   public viewCtrl : ViewController,
@@ -45,9 +54,47 @@ getAuthorities(){
 
 }
 
-uploadHere(){
-  this.navCtrl.setRoot("UploadPage");
+
+recaptchaVerifier = new firebase.auth.RecaptchaVerifier({
+    'size': 'invisible',
+  });
+
+
+
+signUp(){
+
+  var appVerifier = this.recaptchaVerifier;
+  firebase.auth().signInWithPhoneNumber(this.PhoneNo, appVerifier)
+      .then(function (confirmationResult) {
+          this.verifyCard = true;
+          
+      }).catch(function (error) {
+          alert(error.message)
+      });
+
+
+
+
+  this.verifyCard = true;
 }
+
+verify(){
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 gtLogin(){this.navCtrl.setRoot("LoginPage");}

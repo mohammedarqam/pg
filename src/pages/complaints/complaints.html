@@ -9,8 +9,31 @@
           <img src="assets/imgs/gandhi.png"/>
         </ion-col>
         <ion-col col-4 >
-  
-        </ion-col>
+          <ion-row>
+            <ion-buttons end>
+            <button ion-button clear color="dark" (click)="gtSignUp()" >
+              <ion-icon name="ios-share-outline"></ion-icon>
+              Sign Up
+            </button>
+            <button ion-button clear color="dark" (click)="gtLogin()" >
+              <ion-icon name="person"></ion-icon>
+              Login
+            </button>
+            <button ion-button icon-only clear  color="gr" >
+              <ion-icon name="logo-facebook"></ion-icon>
+            </button>
+            <button ion-button icon-only clear  color="gr" >
+              <ion-icon name="logo-instagram"></ion-icon>
+            </button>
+            <button ion-button icon-only clear  color="gr" >
+              <ion-icon name="logo-twitter"></ion-icon>
+            </button>
+            </ion-buttons>
+          </ion-row>
+          <ion-row>
+            <ion-input type="text" placeholder="Area Name" [(ngModel)]="AreaName" class="mainSearchBar" ></ion-input>
+          </ion-row>
+          </ion-col>
       </ion-row>
     </ion-grid>
   
