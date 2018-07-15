@@ -14,19 +14,47 @@
 </ion-header>
 
 
-<ion-content >
+<ion-content  >
+
+  <ion-card class="contentSignUp" >
+    <ion-card-content>
+      <ion-card-title color="primary">
+        New User Registrations
+      </ion-card-title>
+
+
+      <ion-item>
+        <ion-label fixed class="formLabel" >Username :</ion-label>
+        <ion-input type="text" class="inputC" [(ngModel)]="username"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label fixed class="formLabel" >Email</ion-label>
+        <ion-input type="email" class="inputC" [(ngModel)]="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed class="formLabel" >Phone Number</ion-label>
+        <ion-input type="number" class="inputC" [(ngModel)]="phoneNumber"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label fixed class="formLabel" >Occupation</ion-label>
+        <ion-input type="text" class="inputC" [(ngModel)]="Occupation"></ion-input>
+      </ion-item>
+
+
+
+
+  
 
     <div id="recaptcha-container"></div>
   
-    <ion-item>
-      <ion-label stacked>Phone Number</ion-label>
-      <ion-input type="number" [(ngModel)]="phoneNumber"></ion-input>
-    </ion-item>
-  
-    <button ion-button id="sign-in-button" (click)="signIn(phoneNumber)">
+    <button ion-button id="sign-in-button" block [disabled]="!username||!phoneNumber||!Occupation||!email" (click)="signIn(phoneNumber)">
       Sign In
     </button>
-  
+</ion-card-content>
+</ion-card>  
 
   <div class="footerBar">
   <p>© Copy Rights Public Grievances . All Rights Are Reserved 2018</p>

@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import * as firebase from 'firebase';
 
-/**
- * Generated class for the HomeMPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 @IonicPage()
 @Component({
@@ -15,9 +11,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HomeMPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  uid : string ;
+
+  constructor(
+  public navCtrl: NavController,
+   
+  public navParams: NavParams) {
   }
 
+  ionViewDidEnter(){
+    if(firebase.auth().currentUser){
+      this.uid = firebase.auth().currentUser.uid;
+      console.log(this.uid);
+    }
+  }
+  
+  uploadHere(){
+    if(this.uid){
+      this.navCtrl.setRoot("UploadMPage");
+    }else{
+      this.navCtrl.setRoot("SignUpMPage");
+    }
+  }
+  
   gtLogin(){
     this.navCtrl.setRoot("LoginMPage");
   }

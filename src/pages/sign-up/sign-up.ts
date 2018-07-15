@@ -20,7 +20,6 @@ export class SignUpPage {
   authorityRef = firebase.database().ref("Authorities");
   authorities : Array<any> = [];
 
-  verifyCard : boolean = false;
 
 
   constructor(
@@ -116,11 +115,6 @@ signUp(){
   
 
   }
-
-verify(){
-
-}
-
 
 
 

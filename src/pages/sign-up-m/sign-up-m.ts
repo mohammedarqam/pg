@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, LoadingController } from 'ionic-angular';
 
 import firebase from 'firebase';
 
@@ -12,22 +12,32 @@ import firebase from 'firebase';
 })
 export class SignUpMPage {
 
-  public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
-  constructor(public navCtrl:NavController, public alertCtrl:AlertController) {}
+  username : string;
+  email : string;
+  Occupation : string;
+  phoneNumber : number
+  authorityRef = firebase.database().ref("Authorities");
+  authorities : Array<any> = [];
 
-  ionViewDidLoad() {
+
+  public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
+  constructor(
+  public navCtrl:NavController,
+  public loadingCtrl : LoadingController,
+  public alertCtrl:AlertController) {}
+
+  ionViewDidEnter(){
     this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
   }
 
 
-
   signIn(phoneNumber: number){
     const appVerifier = this.recaptchaVerifier;
-    const phoneNumberString = "+" + phoneNumber;
+    const phoneNumberString = "+91" + phoneNumber;
     firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier)
       .then( confirmationResult => {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
+
+
         let prompt = this.alertCtrl.create({
         title: 'Enter the Confirmation code',
         inputs: [{ name: 'confirmationCode', placeholder: 'Confirmation Code' }],
@@ -38,21 +48,31 @@ export class SignUpMPage {
           { text: 'Send',
             handler: data => {
               confirmationResult.confirm(data.confirmationCode)
-              .then(function (result) {
-                // User signed in successfully.
-                console.log(result.user);
-                // ...
+              .then(()=>{
+                let loading = this.loadingCtrl.create({
+                  content: 'Please wait...'
+                  });
+                  loading.present();
+              
+                firebase.database().ref("Users/").child(firebase.auth().currentUser.uid).set({
+                  Name : this.username,
+                  Email : this.email,
+                  PhoneNo : phoneNumber,
+                  Occupation : this.Occupation,
+                }).then(()=>{
+                  this.navCtrl.setRoot("UploadPage");
+                  loading.dismiss();
+                });
               }).catch(function (error) {
-                // User couldn't sign in (bad verification code?)
-                // ...
+                alert("Wrong Verification Code");
+                this.navCtrl.setRoot("HomeMPage");
               });
             }
           }
         ]
-      });
+      }) ;
       prompt.present();
-    })
-    .catch(function (error) {
+    }).catch(function (error) {
       console.error("SMS not sent", error);
     });
   
