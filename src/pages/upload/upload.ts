@@ -16,6 +16,16 @@ export class UploadPage {
   img1 : any;
   img2 : any;
   url : string;
+  fTypeShow : string;
+  fType : string;
+
+   vRefS = firebase.storage().ref("Uploads/Videos/");
+   iRefS = firebase.storage().ref("Uploads/Images/");
+   vRefD = firebase.database().ref("Uploads/Videos");
+   iRefD = firebase.database().ref("Uploads/Images");
+   
+  actRefS : any;
+  actRefD : any;
 
   constructor(
   public navCtrl: NavController,
@@ -42,7 +52,6 @@ getAuthorities(){
     this.authorities=[];
     itemSnapshot.forEach(itemSnap =>{
       this.authorities.push(itemSnap.val());
-      console.log(itemSnap.val());
       return false;
     });
   }).then(()=>{
@@ -57,11 +66,11 @@ upload(){
     });
     loading.present();
 
-    firebase.storage().ref("Uploads/Videos/" + this.VideoTitle).put(this.img2).then(()=>{
-      firebase.storage().ref("Uploads/Videos/" + this.VideoTitle).getDownloadURL().then((dURL)=>{
+      this.actRefS.child(this.VideoTitle).put(this.img2).then(()=>{
+      this.actRefS.child(this.VideoTitle).getDownloadURL().then((dURL)=>{
         this.url = dURL;
       }).then(()=>{
-        firebase.database().ref("Uploads/").push({
+        this.actRefD.push({
           Name : this.Name,
           PhoneNo : this.PhoneNo,
           Authority : this.Authority,
@@ -83,15 +92,32 @@ upload(){
 fileChange(event) {
   if (event.target.files && event.target.files[0]) {
     let reader = new FileReader();
-
     reader.onload = (event: any) => {
       this.img1 = event.target.result;
-    }
+      }
     reader.readAsDataURL(event.target.files[0]);
   }
   let fileList: FileList = event.target.files;
   let file: File = fileList[0];
   this.img2 = file;
+  this.fType = file.name.split('.').pop();
+  this.fType.toLowerCase();
+  if(this.fType == 'mp4'||'3gp'||'avi'||'wmv'||'flv'){
+    this.actRefS = this.vRefS;
+    this.actRefD = this.vRefD;
+    this.fTypeShow = "Video";
+  }else{
+    if(this.fType== 'png'||'jpg'||'jpeg'||''){
+      this.actRefS = this.iRefS;
+      this.actRefD = this.iRefD;
+      this.fTypeShow = "Image";
+    }else{
+      this.img1 = null;
+      alert("File not Recognized");
+    }
+  }
+  console.log(this.actRefD);
+  console.log(this.actRefS);
 }
 
 

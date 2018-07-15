@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar color="primary" >
+    <ion-title>Public Grieviences</ion-title>
+    <button menuToggle ion-button>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="cloud-upload" (click)="gtUpload()" ></ion-icon>
+      </button>
+      <button ion-button icon-only>
+        <ion-icon name="person" (click)="gtLogin()" ></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <img src="assets/imgs/gandhi.png"/>
+</ion-header>
+
+
+<ion-content >
+
+
+
+
+
+  <ion-card  >
+    <div class="videoCard">
+      <video height="300px" width="100%" controls autoplay>
+        <source src="assets/imgs/91.mp4" type="video/mp4" >
+      </video>
+    </div>
+    <ion-card-content>
+      <h2><strong>video</strong></h2>
+      <p><strong>Area :</strong>Abids</p>
+      <p><strong>Description :</strong></p>
+      <p><strong>Uploaded By :</strong>Details are Hidden</p>
+      <ion-item>
+        <button item-end ion-button color="danger" (click)="report()">report abusive video</button>
+      </ion-item>
+      </ion-card-content>
+  </ion-card>
+  <button ion-button color="primary" block large (click)="uploadHere()">Upload Your Videos Here</button>
+
+<div class="wrapper">
+<ion-slides autoplay="3000" loop="true" speed="500" pager="true" >
+  <ion-slide>
+    <img src="assets/imgs/homeimages/1.jpg"  class="bannerImg" />
+  </ion-slide>
+  <ion-slide>
+    <img src="assets/imgs/homeimages/2.jpg"  class="bannerImg" />
+  </ion-slide>
+  <ion-slide>
+    <img src="assets/imgs/homeimages/3.png"  class="bannerImg" />
+  </ion-slide>
+  <ion-slide>
+    <img src="assets/imgs/homeimages/4.jpg"  class="bannerImg" />
+  </ion-slide>
+</ion-slides>
+</div>
+
+
+
+<div class="footerBar">
+  <p>© Copy Rights Public Grievances . All Rights Are Reserved 2018</p>
+  </div>
+
+</ion-content>

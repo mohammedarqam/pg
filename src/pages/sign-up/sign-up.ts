@@ -15,8 +15,8 @@ export class SignUpPage {
   pass : string;
   PhoneNo : string;
   Occupation : string;
-
-
+  OTP : string;
+  public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
   authorityRef = firebase.database().ref("Authorities");
   authorities : Array<any> = [];
 
@@ -31,6 +31,7 @@ export class SignUpPage {
   }
 
   ionViewDidEnter(){
+    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
     this.getAuthorities();
   }
 
@@ -55,28 +56,66 @@ getAuthorities(){
 }
 
 
-recaptchaVerifier = new firebase.auth.RecaptchaVerifier({
-    'size': 'invisible',
-  });
 
+
+signUp1(){
+  let loading = this.loadingCtrl.create({
+    content: 'Please wait...'
+    });
+    loading.present();
+
+    firebase.auth().createUserWithEmailAndPassword(this.email,this.pass).then(()=>{
+      firebase.database().ref("Users/").child(firebase.auth().currentUser.uid).set({
+        Name : this.username,
+        Email : this.email,
+        Pass : this.pass,
+        PhoneNo : this.PhoneNo,
+        Occupation : this.Occupation,
+      }).then(()=>{
+        this.navCtrl.setRoot("UploadPage");
+        loading.dismiss();
+      });
+    }).catch((e)=>{
+      alert(e.message);
+    })
+
+}
 
 
 signUp(){
+  let loading = this.loadingCtrl.create({
+    content: 'Please wait...'
+    });
+    loading.present();
 
-  var appVerifier = this.recaptchaVerifier;
-  firebase.auth().signInWithPhoneNumber(this.PhoneNo, appVerifier)
-      .then(function (confirmationResult) {
-          this.verifyCard = true;
-          
-      }).catch(function (error) {
-          alert(error.message)
-      });
+    const appVerifier = this.recaptchaVerifier;
+    const phoneNumberString = "+91" + this.PhoneNo;
+    console.log("Starting to send");
+    firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier)
+    .then( confirmationResult => {
+    console.log("OTP Sent");
+      confirmationResult.confirm(this.OTP)
+      .then(function (result) {
+        firebase.database().ref("Users/").child(firebase.auth().currentUser.uid).set({
+          Name : this.username,
+          Email : this.email,
+          Pass : this.pass,
+          PhoneNo : this.PhoneNo,
+          Occupation : this.Occupation,
+        }).then(()=>{
+          this.navCtrl.setRoot("UploadPage");
+          loading.dismiss();
+        });
+      }).catch(function (error) {
+  });
+}).catch(function (error) {
+    alert("SMS not sent");
+  });
 
 
+  
 
-
-  this.verifyCard = true;
-}
+  }
 
 verify(){
 

@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar color="primary" >
+    <ion-title>Public Grieviences</ion-title>
+    <button menuToggle ion-button>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="cloud-upload" (click)="gtUpload()" ></ion-icon>
+      </button>
+      <button ion-button icon-only>
+        <ion-icon name="person" (click)="gtLogin()" ></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <img src="assets/imgs/gandhi.png"/>
+</ion-header>
+
+
+<ion-content >
+
+  <ion-card class="complaintsCard" >
+    <ion-card-content>
+      <div class="complaintsHeader">Contact Us</div>
+      <ion-grid>
+        <ion-row>
+            <ion-item>
+              <ion-label color="dark" stacked>Name</ion-label>
+              <ion-input type="text" placeholder="Name" autofocus class="inputC" [(ngModel)]="Name"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label color="dark" stacked>Email</ion-label>
+              <ion-input type="email" placeholder="Email" class="inputC" [(ngModel)]="Email"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked color="dark">Phone No</ion-label>
+              <ion-input type="tel" placeholder="PhoneNo" class="inputC" [(ngModel)]="PhoneNo"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked color="dark">Comments</ion-label>
+              <ion-textarea [(ngModel)]="Comments" class="inputC" placeholder="Enter Comments Here"  ></ion-textarea>
+            </ion-item>
+            <button ion-button [disabled]="!Name||!Email||!PhoneNo||!Comments" (click)="sendContactUs()" >Submit</button>
+          </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>  
+  <ion-card class="cCenter">
+      <ion-card-content>
+      <h2 ion-text color="primary">Get In Touch</h2>  
+      <p><strong>Public Grievences</strong></p>
+      <p>Hyderabad,</p>
+      <p>info@publicg.in</p>
+      </ion-card-content>
+      </ion-card>
+<div class="footerBar">
+  <p>© Copy Rights Public Grievances . All Rights Are Reserved 2018</p>
+  </div>
+
+</ion-content>

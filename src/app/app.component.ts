@@ -7,7 +7,7 @@ import { Nav, Platform } from 'ionic-angular';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = "HomePage";
+  rootPage: any ;
 
   pages: Array<{title: string, component: any}>;
 
@@ -15,19 +15,26 @@ export class MyApp {
     this.initializeApp();
 
     this.pages = [
-      { title: 'HOME', component: "HomePage" },
-      { title: 'COMPLAINTS', component: "ComplaintsPage" },
-      { title: 'GOVT.DEPARTMENTS LINKS', component: "GplPage" },
-      { title: 'NETAJI SPEAKS', component: "NpPage" },
-      { title: 'YOUR AREA NEWS', component: "YanPage" },
-      { title: 'CONTACT', component: "ContactPage" },
-      { title: 'LOGIN', component: "LoginPage" },
+      { title: 'HOME', component: "HomePageM" },
+      { title: 'COMPLAINTS', component: "ComplaintsMPage" },
+      { title: 'GOVT.DEPARTMENTS LINKS', component: "GplMPage" },
+      { title: 'NETAJI SPEAKS', component: "NpMPage" },
+      { title: 'YOUR AREA NEWS', component: "YanMPage" },
+      { title: 'CONTACT', component: "ContactMPage" },
+      { title: 'LOGIN', component: "LoginMPage" },
+      { title: 'Sign Up', component: "SignUpMPage" },
     ];
 
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
+      if(this.platform.is("core")){
+        this.rootPage = "HomePage";
+      }else{
+        this.rootPage = "HomeMPage";
+      }
+
     });
   }
 

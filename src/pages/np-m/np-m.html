@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar color="primary" >
+    <ion-title>Public Grieviences</ion-title>
+    <button menuToggle ion-button>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="cloud-upload" (click)="gtUpload()" ></ion-icon>
+      </button>
+      <button ion-button icon-only>
+        <ion-icon name="person" (click)="gtLogin()" ></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <img src="assets/imgs/gandhi.png"/>
+</ion-header>
+
+
+<ion-content>
+
+
+  <ion-card class="complaintsCard" >
+    <ion-card-content>
+      <div class="complaintsHeader">NETAJI SPEAKS</div>
+    
+      <ion-grid>
+          <ion-row >
+            <ion-item>
+              <ion-label stacked color="dark">State</ion-label>
+              <ion-select placeholder="Select State" class="inputC">
+                <ion-option value='Telangana'>Telangana</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-row>
+          <ion-row >
+            <ion-item>
+              <ion-label stacked color="dark">City</ion-label>
+              <ion-select placeholder="Select City" class="inputC">
+                <ion-option value='Hyderabad'>Hyderabad</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-row>
+          <ion-row >
+            <ion-item>
+              <ion-label stacked color="dark">Area</ion-label>
+              <ion-select placeholder="Select Area" class="inputC">
+                <ion-option value='Malakpet'>Malakpet</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-row>
+          <ion-row >
+            <ion-label stacked></ion-label>
+            <button ion-button >Go</button>
+          </ion-row>
+      </ion-grid>
+    
+    
+    </ion-card-content>
+    </ion-card>  
+<div class="footerBar">
+  <p>© Copy Rights Public Grievances . All Rights Are Reserved 2018</p>
+  </div>
+
+</ion-content>

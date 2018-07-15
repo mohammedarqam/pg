@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar color="primary" >
+      <ion-title>Public Grieviences</ion-title>
+      <button menuToggle ion-button>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-buttons end>
+        <button ion-button icon-only>
+          <ion-icon name="cloud-upload" (click)="gtUpload()" ></ion-icon>
+        </button>
+        <button ion-button icon-only>
+          <ion-icon name="person" (click)="gtLogin()" ></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+    <img src="assets/imgs/gandhi.png"/>
+  </ion-header>
+  
+
+<ion-content>
+
+<ion-card class="complaintsCard" >
+  <ion-card-content>
+    <div class="complaintsHeader">GOVERNMENT DEPARTMENT LINKS</div>
+        <ion-item *ngFor="let link of links" >
+          <ion-item class="gLink">
+            <p item-start>{{link}}</p>
+            <ion-icon name="share-alt" item-end ></ion-icon>
+          </ion-item>
+        </ion-item>
+  </ion-card-content>
+</ion-card>  
+
+<div class="footerBar">
+    <p>© Copy Rights Public Grievances . All Rights Are Reserved 2018</p>
+    </div>
+  
+</ion-content>
