@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, IonicPage, ViewController, LoadingController } from 'ionic-angular';
+import * as firebase from 'firebase';
 
-/**
- * Generated class for the AuthoritiesMPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 @IonicPage()
 @Component({
@@ -15,11 +11,37 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AuthoritiesMPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  authorityRef = firebase.database().ref("Authorities");
+  authorities : Array<any> = [];
+
+  constructor(
+  public viewCtrl : ViewController,
+  public loadingCtrl : LoadingController,
+  public navCtrl: NavController) {
+
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AuthoritiesMPage');
+  ionViewDidEnter(){
+    this.getAuthorities();
   }
 
+
+getAuthorities(){
+  let loading = this.loadingCtrl.create({
+    content: 'Please wait...'
+    });
+    loading.present();
+
+  this.authorityRef.once('value',itemSnapshot=>{
+    this.authorities=[];
+    itemSnapshot.forEach(itemSnap =>{
+      this.authorities.push(itemSnap.val());
+      console.log(itemSnap.val());
+      return false;
+    });
+  }).then(()=>{
+    loading.dismiss();
+  }) ;
+
+}
 }

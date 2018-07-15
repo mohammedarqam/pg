@@ -16,11 +16,17 @@
 
 <ion-content >
 
-
-
-
-
-
+    <div id="recaptcha-container"></div>
+  
+    <ion-item>
+      <ion-label stacked>Phone Number</ion-label>
+      <ion-input type="number" [(ngModel)]="phoneNumber"></ion-input>
+    </ion-item>
+  
+    <button ion-button id="sign-in-button" (click)="signIn(phoneNumber)">
+      Sign In
+    </button>
+  
 
   <div class="footerBar">
   <p>© Copy Rights Public Grievances . All Rights Are Reserved 2018</p>

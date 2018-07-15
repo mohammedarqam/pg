@@ -15,7 +15,8 @@ export class MyApp {
     this.initializeApp();
 
     this.pages = [
-      { title: 'HOME', component: "HomePageM" },
+      { title: 'HOME', component: "HomeMPage" },
+      { title: 'AUTHORITIES', component: "AuthoritiesMPage" },
       { title: 'COMPLAINTS', component: "ComplaintsMPage" },
       { title: 'GOVT.DEPARTMENTS LINKS', component: "GplMPage" },
       { title: 'NETAJI SPEAKS', component: "NpMPage" },
@@ -30,9 +31,9 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       if(this.platform.is("core")){
-        this.rootPage = "HomePage";
-      }else{
         this.rootPage = "HomeMPage";
+      }else{
+        this.rootPage = "HomePage";
       }
 
     });
