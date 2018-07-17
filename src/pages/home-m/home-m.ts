@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import * as firebase from 'firebase';
 
 
@@ -11,21 +11,36 @@ import * as firebase from 'firebase';
 })
 export class HomeMPage {
 
-  uid : string ;
+  uid : boolean = false ;
 
   constructor(
   public navCtrl: NavController,
-   
+  public loadingCtrl: LoadingController,
   public navParams: NavParams) {
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.uid = true;
+      }else{
+        this.uid = false;
+      }
+    })
   }
 
   ionViewDidEnter(){
-    if(firebase.auth().currentUser){
+    this.checkUser();
+  }
+
+  checkUser(){
+/*    if(firebase.auth().currentUser){
       this.uid = firebase.auth().currentUser.uid;
       console.log(this.uid);
+    }else{
+      this.uid = null;
     }
-  }
-  
+
+  */  }
+
+
   uploadHere(){
     if(this.uid){
       this.navCtrl.setRoot("UploadMPage");
@@ -38,7 +53,22 @@ export class HomeMPage {
     this.navCtrl.setRoot("LoginMPage");
   }
   gtUpload(){
-    this.navCtrl.setRoot("UploadMPage");
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+      });
+      loading.present();
+  
+    this.navCtrl.setRoot("UploadMPage").then(()=>{
+      loading.dismiss();
+    }) ;
   }
+
+
+  signOut(){
+    firebase.auth().signOut().then(()=>{
+      this.checkUser();
+    }) ;
+  }
+
   }
   

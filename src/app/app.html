@@ -10,7 +10,7 @@
       <button menuClose ion-item color="primary" *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
-      <button menuClose ion-item color="primary" *ngIf="uid" (click)="login()">
+      <button menuClose ion-item color="primary" *ngIf="!uid" (click)="login()">
         LogIn
       </button>
       <button menuClose ion-item color="primary" *ngIf="!uid" (click)="signUp()">

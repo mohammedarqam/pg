@@ -14,11 +14,19 @@ export class HomePage {
   authorityRef = firebase.database().ref("Authorities");
   authorities : Array<any> = [];
 
+  uid : boolean = false ;
+
   constructor(
   public viewCtrl : ViewController,
   public loadingCtrl : LoadingController,
   public navCtrl: NavController) {
-
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.uid = true;
+      }else{
+        this.uid = false;
+      }
+    });
   }
 
   ionViewDidEnter(){
@@ -47,6 +55,12 @@ getAuthorities(){
 
 uploadHere(){
   this.navCtrl.setRoot("UploadPage");
+}
+
+
+signOut(){
+  firebase.auth().signOut().then(()=>{
+  });
 }
 
 

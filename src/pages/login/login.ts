@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, ViewController, LoadingController } from 'ionic-angular';
+import { NavController, IonicPage, ViewController, LoadingController, AlertController } from 'ionic-angular';
 import * as firebase from 'firebase';
 
 
@@ -13,15 +13,19 @@ export class LoginPage {
 
   authorityRef = firebase.database().ref("Authorities");
   authorities : Array<any> = [];
+  phoneNumber : number
+  public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
 
   constructor(
   public viewCtrl : ViewController,
   public loadingCtrl : LoadingController,
+  public alertCtrl : AlertController,
   public navCtrl: NavController) {
 
   }
 
   ionViewDidEnter(){
+    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
     this.getAuthorities();
   }
 
@@ -44,6 +48,42 @@ getAuthorities(){
   }) ;
 
 }
+
+signIn(phoneNumber: number){
+  const appVerifier = this.recaptchaVerifier;
+  const phoneNumberString = "+91" + phoneNumber;
+  firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier)
+    .then( confirmationResult => {
+
+
+      let prompt = this.alertCtrl.create({
+      title: 'Enter the Confirmation code',
+      inputs: [{ name: 'confirmationCode', placeholder: 'Confirmation Code' }],
+      buttons: [
+        { text: 'Cancel',
+          handler: data => { console.log('Cancel clicked'); }
+        },
+        { text: 'Send',
+          handler: data => {
+            confirmationResult.confirm(data.confirmationCode)
+            .then(()=>{
+              this.navCtrl.setRoot("Homepage");
+            }).catch(function (error) {
+              alert("Wrong Verification Code");
+              this.navCtrl.setRoot("HomeMPage");
+            });
+          }
+        }
+      ]
+    }) ;
+    prompt.present();
+  }).catch(function (error) {
+    console.error("SMS not sent", error);
+  });
+
+}
+
+
 
 gtLogin(){this.navCtrl.setRoot("LoginPage");}
 gtSignUp(){this.navCtrl.setRoot("SignUpPage");}

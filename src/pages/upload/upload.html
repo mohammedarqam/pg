@@ -11,15 +11,19 @@
       <ion-col col-4 >
         <ion-row>
           <ion-buttons end>
-          <button ion-button clear color="dark" (click)="gtSignUp()" >
-            <ion-icon name="ios-share-outline"></ion-icon>
-            Sign Up
-          </button>
-          <button ion-button clear color="dark" (click)="gtLogin()" >
-            <ion-icon name="person"></ion-icon>
-            Login
-          </button>
-          <button ion-button icon-only clear  color="gr" >
+            <button ion-button clear color="dark" *ngIf="!uid" (click)="gtSignUp()" >
+              <ion-icon name="ios-share-outline"></ion-icon>
+              Sign Up
+            </button>
+            <button ion-button clear color="dark" *ngIf="!uid" (click)="gtLogin()" >
+              <ion-icon name="person"></ion-icon>
+              Login
+            </button>
+            <button ion-button clear color="danger" *ngIf="uid" (click)="gtLogin()" >
+              <ion-icon name="person"></ion-icon>
+              Sign Out
+            </button>
+            <button ion-button icon-only clear  color="gr" >
             <ion-icon name="logo-facebook"></ion-icon>
           </button>
           <button ion-button icon-only clear  color="gr" >
@@ -133,7 +137,7 @@
             </ion-item>
   
             <h2>{{fTypeShow}} </h2>
-          <button ion-button (click)="upload()">Upload</button>
+          <button ion-button [disabled]="!Authority||!vTitle||!Area" (click)="upload()">Upload</button>
 
         </ion-card-content>
       </ion-card>

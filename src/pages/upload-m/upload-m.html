@@ -5,8 +5,11 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="person" (click)="gtLogin()" ></ion-icon>
+      <button ion-button *ngIf="!uid" (click)="gtLogin()" >
+        Sign In
+      </button>
+      <button ion-button color="danger" *ngIf="uid" (click)="signOut()" >
+        Sign Out
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -15,7 +18,53 @@
 
 
 <ion-content padding>
+  <ion-card >
+    <ion-card-content>
+      <ion-card-title color="primary">
+        Upload Videos
+      </ion-card-title>
 
+
+      <ion-item>
+        <ion-label fixed class="formLabel" >Name :</ion-label>
+        <ion-input type="text" class="inputC" [(ngModel)]="Name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed class="formLabel" >Phone Number</ion-label>
+        <ion-input type="tel" class="inputC" [(ngModel)]="PhoneNo"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed class="formLabel" >Authority</ion-label>
+        <ion-select class="inputC" placeholder="Select Authority" [(ngModel)]="Authority" >
+          <ion-option *ngFor="let author of authorities" [value]="author.Authority">{{author.Authority}} </ion-option>
+        </ion-select>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label fixed class="formLabel" >Video Title</ion-label>
+        <ion-input type="text" class="inputC" [(ngModel)]="vTitle"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label fixed class="formLabel" >Area</ion-label>
+        <ion-input type="text" class="inputC" [(ngModel)]="Area"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label color="dark" stacked>Images/Videos</ion-label>
+
+          <ion-input type="file" (change)="fileChange($event)" class="inputC" id="file-input" #fileInp (ngModel)="file1" ></ion-input>
+
+        </ion-item>
+
+        <h2>{{fTypeShow}} </h2>
+      <button ion-button (click)="upload()">Upload</button>
+
+    </ion-card-content>
+  </ion-card>
 
 
 

@@ -60,7 +60,7 @@ export class SignUpMPage {
                   PhoneNo : phoneNumber,
                   Occupation : this.Occupation,
                 }).then(()=>{
-                  this.navCtrl.setRoot("UploadPage");
+                  this.navCtrl.setRoot("UploadMPage");
                   loading.dismiss();
                 });
               }).catch(function (error) {

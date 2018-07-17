@@ -10,7 +10,7 @@ import { HomeMPage } from '../pages/home-m/home-m';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any ="HomeMPage" ;
+  rootPage: any ;
 
   pages: Array<{title: string, component: any}>;
   uid : string;
@@ -31,15 +31,18 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-/*      if(this.platform.is("core")){
-        this.rootPage = "HomeMPage";
-      }else{
+      if(this.platform.is("core")){
         this.rootPage = "HomePage";
+      }else{
+        this.rootPage = "HomeMPage";
       }
-*/
-      if(firebase.auth().currentUser){
+
+      firebase.auth().onAuthStateChanged(function(user){
         this.uid = firebase.auth().currentUser.uid;
-      }
+      });
+
+//      if(firebase.auth().currentUser){
+      // }
 
     });
     }

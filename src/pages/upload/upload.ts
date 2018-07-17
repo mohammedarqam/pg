@@ -8,6 +8,10 @@ import * as firebase from 'firebase';
   templateUrl: 'upload.html',
 })
 export class UploadPage {
+
+  uid : boolean = false ;
+
+
   Name : string;
   PhoneNo : string;
   Authority : string;
@@ -27,11 +31,24 @@ export class UploadPage {
   actRefS : any;
   actRefD : any;
 
+  userRef = firebase.database().ref("Users");
+  user :any;
+
   constructor(
   public navCtrl: NavController,
   public loadingCtrl : LoadingController,
   public toastCtrl : ToastController, 
   public navParams: NavParams) {
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.uid = true;
+      }else{
+        this.uid = false;
+      }
+    });
+
+
+
   }
 
   authorityRef = firebase.database().ref("Authorities");
@@ -53,9 +70,14 @@ getAuthorities(){
     itemSnapshot.forEach(itemSnap =>{
       this.authorities.push(itemSnap.val());
       return false;
-    });
+    }) ;
   }).then(()=>{
-    loading.dismiss();
+    this.userRef.child(firebase.auth().currentUser.uid).once('value',userSnap=>{
+      this.Name = userSnap.val().Name;
+      this.PhoneNo = userSnap.val().PhoneNo;
+    }).then(()=>{
+      loading.dismiss();
+    });
   }) ;
 
 }
@@ -102,23 +124,27 @@ fileChange(event) {
   this.img2 = file;
   this.fType = file.name.split('.').pop();
   this.fType.toLowerCase();
-  if(this.fType == 'mp4'||'3gp'||'avi'||'wmv'||'flv'){
+  console.log(this.fType);
+
+  switch (this.fType) {
+    case "mp4":
     this.actRefS = this.vRefS;
     this.actRefD = this.vRefD;
     this.fTypeShow = "Video";
-  }else{
-    if(this.fType== 'png'||'jpg'||'jpeg'||''){
-      this.actRefS = this.iRefS;
-      this.actRefD = this.iRefD;
-      this.fTypeShow = "Image";
-    }else{
-      this.img1 = null;
-      alert("File not Recognized");
-    }
+        break;
+    case "png":
+    this.actRefS = this.iRefS;
+    this.actRefD = this.iRefD;
+    this.fTypeShow = "Image";
+      break;
+    default:
+        alert("File Not Recognised");
+      break;
   }
   console.log(this.actRefD);
   console.log(this.actRefS);
 }
+
 
 
 presentToast(msg) {
@@ -142,6 +168,10 @@ this.url = null;
 }
 
 
+signOut(){
+  firebase.auth().signOut().then(()=>{
+  });
+}
 
 
 

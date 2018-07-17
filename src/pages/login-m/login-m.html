@@ -16,8 +16,25 @@
 <ion-content padding>
 
 
+  <ion-card class="contentSignUp" >
+    <ion-card-content>
+      <ion-card-title color="primary">
+        User Login
+      </ion-card-title>
 
+      <ion-item>
+        <ion-label fixed class="formLabel" >Phone Number</ion-label>
+        <ion-input type="number" class="inputC" [(ngModel)]="phoneNumber"></ion-input>
+      </ion-item>
 
+    <div id="recaptcha-container"></div>
+  
+    <button ion-button id="sign-in-button" block [disabled]="!phoneNumber" (click)="signIn(phoneNumber)">
+      Sign In
+    </button>
+</ion-card-content>
+</ion-card>  
+  
 
 
 

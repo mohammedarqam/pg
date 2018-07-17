@@ -15,10 +15,6 @@
               <ion-icon name="ios-share-outline"></ion-icon>
               Sign Up
             </button>
-            <button ion-button clear color="dark">
-              <ion-icon name="person"></ion-icon>
-              Login
-            </button>
             <button ion-button icon-only clear  color="gr" >
               <ion-icon name="logo-facebook"></ion-icon>
             </button>
@@ -91,7 +87,23 @@
       </ion-col>
       <ion-col col-6 >
         <ion-card>
-        </ion-card>
+
+          <ion-card-content>
+            <ion-card-title color="primary">
+              Sign In
+            </ion-card-title>
+            <ion-item>
+              <ion-label fixed class="formLabel" >Phone Number</ion-label>
+              <ion-input type="tel" class="inputC" [(ngModel)]="phoneNumber"></ion-input>
+            </ion-item>
+            <div id="recaptcha-container"></div>
+            <button ion-button id="sign-in-button"  [disabled]="!phoneNumber" (click)="signIn(phoneNumber)">
+              Sign Up
+            </button>
+        
+
+          </ion-card-content>
+          </ion-card>
       </ion-col>
       <ion-col col-3 >
         <ion-card>

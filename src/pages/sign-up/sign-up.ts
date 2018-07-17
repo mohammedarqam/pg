@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, ViewController, LoadingController } from 'ionic-angular';
+import { NavController, IonicPage, ViewController, LoadingController, AlertController } from 'ionic-angular';
 import * as firebase from 'firebase';
 
 
@@ -12,10 +12,8 @@ export class SignUpPage {
 
   username : string;
   email : string;
-  pass : string;
-  PhoneNo : string;
   Occupation : string;
-  OTP : string;
+  phoneNumber : number
   public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
   authorityRef = firebase.database().ref("Authorities");
   authorities : Array<any> = [];
@@ -25,6 +23,7 @@ export class SignUpPage {
   constructor(
   public viewCtrl : ViewController,
   public loadingCtrl : LoadingController,
+  public alertCtrl : AlertController,
   public navCtrl: NavController) {
 
   }
@@ -56,7 +55,7 @@ getAuthorities(){
 
 
 
-
+/*
 signUp1(){
   let loading = this.loadingCtrl.create({
     content: 'Please wait...'
@@ -117,9 +116,55 @@ signUp(){
   }
 
 
+*/
 
 
+signIn(phoneNumber: number){
+  const appVerifier = this.recaptchaVerifier;
+  const phoneNumberString = "+91" + phoneNumber;
+  firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier)
+    .then( confirmationResult => {
 
+
+      let prompt = this.alertCtrl.create({
+      title: 'Enter the Confirmation code',
+      inputs: [{ name: 'confirmationCode', placeholder: 'Confirmation Code' }],
+      buttons: [
+        { text: 'Cancel',
+          handler: data => { console.log('Cancel clicked'); }
+        },
+        { text: 'Send',
+          handler: data => {
+            confirmationResult.confirm(data.confirmationCode)
+            .then(()=>{
+              let loading = this.loadingCtrl.create({
+                content: 'Please wait...'
+                });
+                loading.present();
+            
+              firebase.database().ref("Users/").child(firebase.auth().currentUser.uid).set({
+                Name : this.username,
+                Email : this.email,
+                PhoneNo : phoneNumber,
+                Occupation : this.Occupation,
+              }).then(()=>{
+                this.navCtrl.setRoot("UploadMPage");
+                loading.dismiss();
+              });
+            }).catch(function (error) {
+              alert("Wrong Verification Code");
+              this.navCtrl.setRoot("HomeMPage");
+            });
+          }
+        }
+      ]
+    }) ;
+    prompt.present();
+  }).catch(function (error) {
+    console.error("SMS not sent", error);
+  });
+
+}
 
 
 

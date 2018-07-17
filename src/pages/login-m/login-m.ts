@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, LoadingController } from 'ionic-angular';
 
-/**
- * Generated class for the LoginMPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import firebase from 'firebase';
+
+
 
 @IonicPage()
 @Component({
@@ -14,9 +11,56 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'login-m.html',
 })
 export class LoginMPage {
+  phoneNumber : number
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
+  constructor(
+  public navCtrl:NavController,
+  public loadingCtrl : LoadingController,
+  public alertCtrl:AlertController) {}
+
+  ionViewDidEnter(){
+    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
   }
+
+
+  signIn(phoneNumber: number){
+    const appVerifier = this.recaptchaVerifier;
+    const phoneNumberString = "+91" + phoneNumber;
+    firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier)
+      .then( confirmationResult => {
+
+
+        let prompt = this.alertCtrl.create({
+        title: 'Enter the Confirmation code',
+        inputs: [{ name: 'confirmationCode', placeholder: 'Confirmation Code' }],
+        buttons: [
+          { text: 'Cancel',
+            handler: data => { console.log('Cancel clicked'); }
+          },
+          { text: 'Send',
+            handler: data => {
+              confirmationResult.confirm(data.confirmationCode)
+              .then(()=>{
+                this.navCtrl.setRoot("UploadMPage");
+              }).catch(function (error) {
+                alert("Wrong Verification Code");
+                this.navCtrl.setRoot("HomeMPage");
+              });
+            }
+          }
+        ]
+      }) ;
+      prompt.present();
+    }).catch(function (error) {
+      console.error("SMS not sent", error);
+    });
+  
+  }
+
+
+
+
 
   gtUpload(){
     this.navCtrl.setRoot("UploadMPage");
