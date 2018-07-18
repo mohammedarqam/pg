@@ -5,8 +5,8 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="cloud-upload" (click)="gtUpload()" ></ion-icon>
+      <button ion-button *ngIf="!uid" (click)="gtSignUp()" >
+        Sign Up
       </button>
     </ion-buttons>
   </ion-navbar>

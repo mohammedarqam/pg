@@ -26,20 +26,6 @@ export class HomeMPage {
     })
   }
 
-  ionViewDidEnter(){
-    this.checkUser();
-  }
-
-  checkUser(){
-/*    if(firebase.auth().currentUser){
-      this.uid = firebase.auth().currentUser.uid;
-      console.log(this.uid);
-    }else{
-      this.uid = null;
-    }
-
-  */  }
-
 
   uploadHere(){
     if(this.uid){
@@ -66,7 +52,7 @@ export class HomeMPage {
 
   signOut(){
     firebase.auth().signOut().then(()=>{
-      this.checkUser();
+      this.navCtrl.setRoot("LoginMPage")
     }) ;
   }
 

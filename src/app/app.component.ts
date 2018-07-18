@@ -41,9 +41,6 @@ export class MyApp {
         this.uid = firebase.auth().currentUser.uid;
       });
 
-//      if(firebase.auth().currentUser){
-      // }
-
     });
     }
 

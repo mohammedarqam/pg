@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AbuseVmPage } from './abuse-vm';
+import { VidPlayerPage } from './vid-player';
 
 @NgModule({
   declarations: [
-    AbuseVmPage,
+    VidPlayerPage,
   ],
   imports: [
-    IonicPageModule.forChild(AbuseVmPage),
+    IonicPageModule.forChild(VidPlayerPage),
   ],
 })
-export class AbuseVmPageModule {}
+export class VidPlayerPageModule {}

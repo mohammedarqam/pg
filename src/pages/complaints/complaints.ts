@@ -17,6 +17,11 @@ export class ComplaintsPage {
   Comments : string;
   img1 : any;
   img2 : any;
+  uid : boolean = false ;
+  upType : any;
+  fTypeShow : string;
+  fType : string;
+
 
   compRef=firebase.database().ref("Complaints");
   authorityRef = firebase.database().ref("Authorities");
@@ -27,6 +32,13 @@ export class ComplaintsPage {
   public loadingCtrl : LoadingController, 
   public toastCtrl : ToastController,
   public navParams: NavParams) {
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.uid = true;
+      }else{
+        this.uid = false;
+      }
+    });
   }
 
 
@@ -44,7 +56,7 @@ export class ComplaintsPage {
     });
   }
 
-  sendComplaint(){
+  uploadImage(){
     let loading = this.loadingCtrl.create({
     content: 'Please wait...'
     });
@@ -54,7 +66,7 @@ export class ComplaintsPage {
       firebase.storage().ref("Complaints/Images/" + this.Name).getDownloadURL().then((dURL)=>{
         this.url = dURL;
       }).then(()=>{
-        firebase.database().ref("Complaints/").push({
+        firebase.database().ref("Complaints/Images").push({
           Name : this.Name,
           Email : this.Email,
           PhoneNo : this.PhoneNo,
@@ -70,6 +82,31 @@ export class ComplaintsPage {
     })
   }
 
+  uploadVideo(){
+    let loading = this.loadingCtrl.create({
+    content: 'Please wait...'
+    });
+    loading.present();
+
+    firebase.storage().ref("Complaints/Videos/" + this.Name).put(this.img2).then(()=>{
+      firebase.storage().ref("Complaints/Videos/" + this.Name).getDownloadURL().then((dURL)=>{
+        this.url = dURL;
+      }).then(()=>{
+        firebase.database().ref("Complaints/Videos/").push({
+          Name : this.Name,
+          Email : this.Email,
+          PhoneNo : this.PhoneNo,
+          Category : this.Category,
+          Comments : this.Comments,
+          File : this.url,
+        }).then(()=>{
+          this.clearData();
+          this.presentToast("Complaint Posted");
+          loading.dismiss();
+        })
+      })
+    })
+  }
 
   fileChange(event) {
     if (event.target.files && event.target.files[0]) {
@@ -83,7 +120,23 @@ export class ComplaintsPage {
     let fileList: FileList = event.target.files;
     let file: File = fileList[0];
     this.img2 = file;
-  }
+    this.fType = file.name.split('.').pop();
+    this.fType.toLowerCase();
+    console.log(this.fType);
+    switch (this.fType) {
+      case "mp4":
+      this.upType = "uploadVideo"
+      this.fTypeShow = "Video";
+          break;
+      case "png":
+      this.upType = "uploadImage"
+      this.fTypeShow = "Image";
+        break;
+      default:
+          alert("File Not Recognised");
+        break;
+      }
+ }
 
 
   presentToast(msg) {
@@ -105,6 +158,11 @@ clearData(){
   this.img2 = null;
   this.url = null;
   
+}
+signOut(){
+  firebase.auth().signOut().then(()=>{
+    this.navCtrl.setRoot("LoginPage");
+  });
 }
 
 

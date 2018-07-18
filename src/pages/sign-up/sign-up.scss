@@ -5,12 +5,22 @@ page-sign-up {
         border-radius: 4%;
         margin-bottom: 20px;
     }
-    ion-label{
-        font-size: 16px !important;
-        color : black;
-    }
+
 .formLabel{
     font-size: 12px !important;
     color : black;
 }        
+
+.authSub{
+    background-color: map-get($colors,authSub);
+    border-bottom: 1px white solid;
+}
+ion-label{
+    font-size: 16px !important;
+}
+.videoIMG{
+    width: 100%;
+}
+
+
 }

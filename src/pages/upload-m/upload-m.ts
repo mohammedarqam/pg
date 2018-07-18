@@ -155,6 +155,11 @@ this.img2 = null;
 this.url = null;
 
 }
+signOut(){
+  firebase.auth().signOut().then(()=>{
+    this.navCtrl.setRoot("LoginMPage");
+  });
+}
 
   gtLogin(){
     this.navCtrl.setRoot("LoginMPage");

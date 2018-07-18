@@ -5,11 +5,11 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="cloud-upload" (click)="gtUpload()" ></ion-icon>
+      <button ion-button *ngIf="!uid" (click)="gtLogin()" >
+        Sign In
       </button>
-      <button ion-button icon-only>
-        <ion-icon name="person" (click)="gtLogin()" ></ion-icon>
+      <button ion-button color="danger" *ngIf="uid" (click)="signOut()" >
+        Sign Out
       </button>
     </ion-buttons>
   </ion-navbar>

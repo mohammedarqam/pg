@@ -11,7 +11,6 @@ export class UploadPage {
 
   uid : boolean = false ;
 
-
   Name : string;
   PhoneNo : string;
   Authority : string;
@@ -23,13 +22,7 @@ export class UploadPage {
   fTypeShow : string;
   fType : string;
 
-   vRefS = firebase.storage().ref("Uploads/Videos/");
-   iRefS = firebase.storage().ref("Uploads/Images/");
-   vRefD = firebase.database().ref("Uploads/Videos");
-   iRefD = firebase.database().ref("Uploads/Images");
-   
-  actRefS : any;
-  actRefD : any;
+  upType : any;
 
   userRef = firebase.database().ref("Users");
   user :any;
@@ -43,6 +36,7 @@ export class UploadPage {
       if(user){
         this.uid = true;
       }else{
+        this.navCtrl.setRoot("LoginPage");
         this.uid = false;
       }
     });
@@ -82,17 +76,18 @@ getAuthorities(){
 
 }
 
-upload(){
+
+uploadVideo(){
   let loading = this.loadingCtrl.create({
     content: 'Please wait...'
     });
     loading.present();
 
-      this.actRefS.child(this.VideoTitle).put(this.img2).then(()=>{
-      this.actRefS.child(this.VideoTitle).getDownloadURL().then((dURL)=>{
+    firebase.storage().ref("Uploads/Videos/"+this.VideoTitle).put(this.img2).then(()=>{
+      firebase.storage().ref("Uploads/Videos/"+this.VideoTitle).getDownloadURL().then((dURL)=>{
         this.url = dURL;
       }).then(()=>{
-        this.actRefD.push({
+        firebase.database().ref("Uploads/Videos/").push({
           Name : this.Name,
           PhoneNo : this.PhoneNo,
           Authority : this.Authority,
@@ -101,21 +96,45 @@ upload(){
           File : this.url,
         }).then(()=>{
           this.clearData();
-          this.presentToast("Complaint Posted");
+          this.presentToast("File Posted");
           loading.dismiss();
         })
       })
     })
-
 }
 
+uploadImage(){
+  let loading = this.loadingCtrl.create({
+    content: 'Please wait...'
+    });
+    loading.present();
+
+    firebase.storage().ref("Uploads/Images/"+this.VideoTitle).put(this.img2).then(()=>{
+      firebase.storage().ref("Uploads/Images/"+this.VideoTitle).getDownloadURL().then((dURL)=>{
+        this.url = dURL;
+      }).then(()=>{
+        firebase.database().ref("Uploads/Images/").push({
+          Name : this.Name,
+          PhoneNo : this.PhoneNo,
+          Authority : this.Authority,
+          VideoTitle : this.VideoTitle,
+          Area : this.Area,
+          File : this.url,
+        }).then(()=>{
+          this.clearData();
+          this.presentToast("File Posted");
+          loading.dismiss();
+        })
+      })
+    })
+}
 
 
 fileChange(event) {
   if (event.target.files && event.target.files[0]) {
     let reader = new FileReader();
     reader.onload = (event: any) => {
-      this.img1 = event.target.result;
+      this.img1 = event.target.result ;
       }
     reader.readAsDataURL(event.target.files[0]);
   }
@@ -124,25 +143,20 @@ fileChange(event) {
   this.img2 = file;
   this.fType = file.name.split('.').pop();
   this.fType.toLowerCase();
-  console.log(this.fType);
 
   switch (this.fType) {
     case "mp4":
-    this.actRefS = this.vRefS;
-    this.actRefD = this.vRefD;
+    this.upType = "uploadVideo"
     this.fTypeShow = "Video";
         break;
     case "png":
-    this.actRefS = this.iRefS;
-    this.actRefD = this.iRefD;
+    this.upType = "uploadImage"
     this.fTypeShow = "Image";
       break;
     default:
         alert("File Not Recognised");
       break;
   }
-  console.log(this.actRefD);
-  console.log(this.actRefS);
 }
 
 

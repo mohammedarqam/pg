@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import * as firebase from 'firebase';
 
-/**
- * Generated class for the NpMPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 @IonicPage()
 @Component({
@@ -14,15 +10,50 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'np-m.html',
 })
 export class NpMPage {
+  uid : boolean = false ;
+  videos : Array<any> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+  public navCtrl: NavController, 
+  public modalCtrl: ModalController,
+  public navParams: NavParams) {
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.uid = true;
+      }else{
+        this.uid = false;
+      }
+    })
   }
-
+  ionViewDidEnter(){
+    this.getVideos();
+  }
+  
+    getVideos(){
+      firebase.database().ref("Uploads/Videos/").once('value',itemSnapshot=>{
+        this.videos = [];
+        itemSnapshot.forEach(itemSnap =>{
+          var temp = itemSnap.val();
+          temp.key = itemSnap.key;
+          this.videos.push(temp);
+        });
+      });  
+    }
+    playVid(srce) {
+      let profileModal = this.modalCtrl.create("VidPlayerPage",{srces : srce});
+      profileModal.present();
+    }
+  
   gtLogin(){
     this.navCtrl.setRoot("LoginMPage");
   }
   gtUpload(){
     this.navCtrl.setRoot("UploadMPage");
+  }
+  signOut(){
+    firebase.auth().signOut().then(()=>{
+      this.navCtrl.setRoot("LoginMPage")
+    }) ;
   }
   }
   

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, ViewController, LoadingController } from 'ionic-angular';
+import { NavController, IonicPage, ViewController, LoadingController, ModalController } from 'ionic-angular';
 import * as firebase from 'firebase';
 
 
@@ -10,15 +10,16 @@ import * as firebase from 'firebase';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  mainSrc = "assets/imgs/91.mp4"
   authorityRef = firebase.database().ref("Authorities");
   authorities : Array<any> = [];
-
+  videos : Array<any> = [];
   uid : boolean = false ;
 
   constructor(
   public viewCtrl : ViewController,
   public loadingCtrl : LoadingController,
+  public modalCtrl: ModalController,
   public navCtrl: NavController) {
     firebase.auth().onAuthStateChanged((user)=>{
       if(user){
@@ -33,7 +34,11 @@ export class HomePage {
     this.getAuthorities();
   }
 
-
+  playVid(srce) {
+    let profileModal = this.modalCtrl.create("VidPlayerPage",{srces : srce});
+    profileModal.present();
+  }
+ 
 getAuthorities(){
   let loading = this.loadingCtrl.create({
     content: 'Please wait...'
@@ -44,22 +49,43 @@ getAuthorities(){
     this.authorities=[];
     itemSnapshot.forEach(itemSnap =>{
       this.authorities.push(itemSnap.val());
-      console.log(itemSnap.val());
       return false;
     });
   }).then(()=>{
     loading.dismiss();
+  }).then(()=>{
+    this.getVideos();
   }) ;
 
 }
 
+
+getVideos(){
+  firebase.database().ref("Uploads/Videos/").once('value',itemSnapshot=>{
+    this.videos = [];
+    itemSnapshot.forEach(itemSnap =>{
+      var temp = itemSnap.val();
+      temp.key = itemSnap.key;
+      this.videos.push(temp);
+    });
+  });  
+}
+
+
+
+
 uploadHere(){
-  this.navCtrl.setRoot("UploadPage");
+  if(this.uid){
+    this.navCtrl.setRoot("UploadPage");
+  }else{
+    this.navCtrl.setRoot("SignUpPage");
+  }
 }
 
 
 signOut(){
   firebase.auth().signOut().then(()=>{
+    this.navCtrl.setRoot("LoginPage");
   });
 }
 

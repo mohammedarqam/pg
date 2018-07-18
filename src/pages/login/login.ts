@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, ViewController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, IonicPage, ViewController, LoadingController, AlertController, ModalController } from 'ionic-angular';
 import * as firebase from 'firebase';
 
 
@@ -14,14 +14,24 @@ export class LoginPage {
   authorityRef = firebase.database().ref("Authorities");
   authorities : Array<any> = [];
   phoneNumber : number
+  videos : Array<any> = [];
   public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
+  uid : boolean = false ;
 
   constructor(
   public viewCtrl : ViewController,
   public loadingCtrl : LoadingController,
+  public modalCtrl: ModalController,
   public alertCtrl : AlertController,
   public navCtrl: NavController) {
-
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.uid = true;
+        this.navCtrl.setRoot("HomePage");
+      }else{
+        this.uid = false;
+      }
+    });
   }
 
   ionViewDidEnter(){
@@ -40,11 +50,12 @@ getAuthorities(){
     this.authorities=[];
     itemSnapshot.forEach(itemSnap =>{
       this.authorities.push(itemSnap.val());
-      console.log(itemSnap.val());
       return false;
     });
   }).then(()=>{
     loading.dismiss();
+  }).then(()=>{
+    this.getVideos();
   }) ;
 
 }
@@ -67,7 +78,7 @@ signIn(phoneNumber: number){
           handler: data => {
             confirmationResult.confirm(data.confirmationCode)
             .then(()=>{
-              this.navCtrl.setRoot("Homepage");
+              this.navCtrl.setRoot("HomePage");
             }).catch(function (error) {
               alert("Wrong Verification Code");
               this.navCtrl.setRoot("HomeMPage");
@@ -83,6 +94,22 @@ signIn(phoneNumber: number){
 
 }
 
+playVid(srce) {
+  let profileModal = this.modalCtrl.create("VidPlayerPage",{srces : srce});
+  profileModal.present();
+}
+
+
+getVideos(){
+  firebase.database().ref("Uploads/Videos/").once('value',itemSnapshot=>{
+    this.videos = [];
+    itemSnapshot.forEach(itemSnap =>{
+      var temp = itemSnap.val();
+      temp.key = itemSnap.key;
+      this.videos.push(temp);
+    });
+  });  
+}
 
 
 gtLogin(){this.navCtrl.setRoot("LoginPage");}

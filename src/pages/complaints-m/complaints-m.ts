@@ -20,6 +20,8 @@ export class ComplaintsMPage {
   img1 : any;
   img2 : any;
 
+  uid : boolean = false ;
+
   compRef=firebase.database().ref("Complaints");
   authorityRef = firebase.database().ref("Authorities");
   authorities : Array<any> = [];
@@ -29,6 +31,13 @@ export class ComplaintsMPage {
   public loadingCtrl : LoadingController, 
   public toastCtrl : ToastController,
   public navParams: NavParams) {
+   firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.uid = true;
+      }else{
+        this.uid = false;
+      }
+    })
   }
 
 
@@ -115,4 +124,10 @@ gtLogin(){
 gtUpload(){
   this.navCtrl.setRoot("UploadMPage");
 }
+signOut(){
+  firebase.auth().signOut().then(()=>{
+    this.navCtrl.setRoot("LoginMPage")
+  }) ;
+}
+
 }

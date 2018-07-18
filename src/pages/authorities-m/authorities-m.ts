@@ -13,12 +13,19 @@ export class AuthoritiesMPage {
 
   authorityRef = firebase.database().ref("Authorities");
   authorities : Array<any> = [];
+  uid : boolean = false ;
 
   constructor(
   public viewCtrl : ViewController,
   public loadingCtrl : LoadingController,
   public navCtrl: NavController) {
-
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.uid = true;
+      }else{
+        this.uid = false;
+      }
+    })
   }
 
   ionViewDidEnter(){
@@ -44,4 +51,13 @@ getAuthorities(){
   }) ;
 
 }
+signOut(){
+  firebase.auth().signOut().then(()=>{
+    this.navCtrl.setRoot("LoginMPage")
+  }) ;
+}
+gtLogin(){
+  this.navCtrl.setRoot("LoginMPage");
+}
+
 }

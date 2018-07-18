@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, ViewController, LoadingController } from 'ionic-angular';
+import { NavController, IonicPage, ViewController, LoadingController, ModalController } from 'ionic-angular';
 import * as firebase from 'firebase';
 
 
@@ -13,13 +13,47 @@ import * as firebase from 'firebase';
   templateUrl: 'np.html',
 })
 export class NpPage {
+  uid : boolean = false ;
+  videos : Array<any> = [];
 
-  constructor(public navCtrl: NavController,) {
+  constructor(
+  public navCtrl: NavController,
+  public modalCtrl: ModalController,
+  ) {
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.uid = true;
+      }else{
+        this.uid = false;
+      }
+    });
   }
+ionViewDidEnter(){
+  this.getVideos();
+}
 
+  getVideos(){
+    firebase.database().ref("Uploads/Videos/").once('value',itemSnapshot=>{
+      this.videos = [];
+      itemSnapshot.forEach(itemSnap =>{
+        var temp = itemSnap.val();
+        temp.key = itemSnap.key;
+        this.videos.push(temp);
+      });
+    });  
+  }
+  playVid(srce) {
+    let profileModal = this.modalCtrl.create("VidPlayerPage",{srces : srce});
+    profileModal.present();
+  }
+ 
 
-
-
+  signOut(){
+    firebase.auth().signOut().then(()=>{
+      this.navCtrl.setRoot("LoginPage");
+    });
+  }
+  
   
   gtLogin(){this.navCtrl.setRoot("LoginPage");}
   gtSignUp(){this.navCtrl.setRoot("SignUpPage");}

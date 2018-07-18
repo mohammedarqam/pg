@@ -11,15 +11,19 @@
         <ion-col col-4 >
           <ion-row>
             <ion-buttons end>
-            <button ion-button clear color="dark" (click)="gtSignUp()" >
-              <ion-icon name="ios-share-outline"></ion-icon>
-              Sign Up
-            </button>
-            <button ion-button clear color="dark" (click)="gtLogin()" >
-              <ion-icon name="person"></ion-icon>
-              Login
-            </button>
-            <button ion-button icon-only clear  color="gr" >
+              <button ion-button clear color="dark" *ngIf="!uid" (click)="gtSignUp()" >
+                <ion-icon name="ios-share-outline"></ion-icon>
+                Sign Up
+              </button>
+              <button ion-button clear color="dark" *ngIf="!uid" (click)="gtLogin()" >
+                <ion-icon name="person"></ion-icon>
+                Login
+              </button>
+              <button ion-button clear color="danger" *ngIf="uid" (click)="signOut()" >
+                <ion-icon name="person"></ion-icon>
+                Sign Out
+              </button>
+                <button ion-button icon-only clear  color="gr" >
               <ion-icon name="logo-facebook"></ion-icon>
             </button>
             <button ion-button icon-only clear  color="gr" >
@@ -97,7 +101,8 @@
             <ion-label stacked color="dark">Comments</ion-label>
             <ion-textarea [(ngModel)]="Comments" class="inputC" placeholder="Enter Comments Here"  ></ion-textarea>
           </ion-item>
-          <button ion-button (click)="sendComplaint()" >Submit</button>
+          <h2>{{fTypeShow}}</h2>
+          <button ion-button  [disabled]="!Name||!Email||!PhoneNo||!Category||!img1" (click)="this[upType]()" >Submit</button>
         </ion-col>
       </ion-row>
     </ion-grid>

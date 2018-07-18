@@ -8,5 +8,8 @@ page-upload {
     ion-label{
         font-size: 16px !important;
     }
-    
+    .authSub{
+        background-color: map-get($colors,authSub);
+        border-bottom: 1px white solid;
+    }    
 }

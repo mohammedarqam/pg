@@ -60,7 +60,9 @@ export class LoginMPage {
 
 
 
-
+  gtSignUp(){
+    this.navCtrl.setRoot("SignUpMPage");
+  }
 
   gtUpload(){
     this.navCtrl.setRoot("UploadMPage");

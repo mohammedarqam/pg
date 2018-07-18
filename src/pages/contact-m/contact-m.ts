@@ -14,12 +14,20 @@ export class ContactMPage {
   Email : string;
   PhoneNo : string;
   Comments : string;
+  uid : boolean = false ;
 
   constructor(
   public navCtrl: NavController,
   public loadingCtrl : LoadingController, 
   public toastCtrl : ToastController,
   public navParams: NavParams) {
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.uid = true;
+      }else{
+        this.uid = false;
+      }
+    })
   }
 
 
@@ -65,5 +73,13 @@ clearData(){
   gtUpload(){
     this.navCtrl.setRoot("UploadMPage");
   }
+
+  
+  signOut(){
+    firebase.auth().signOut().then(()=>{
+      this.navCtrl.setRoot("LoginMPage")
+    }) ;
+  }
+
   }
   

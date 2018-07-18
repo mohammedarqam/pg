@@ -13,15 +13,28 @@ export class ContactPage {
   Email : string;
   PhoneNo : string;
   Comments : string;
+  uid : boolean = false ;
 
   constructor(
   public navCtrl: NavController,
   public loadingCtrl : LoadingController, 
   public toastCtrl : ToastController,
   public navParams: NavParams) {
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.uid = true;
+      }else{
+        this.uid = false;
+      }
+    });
   }
 
-
+  signOut(){
+    firebase.auth().signOut().then(()=>{
+      this.navCtrl.setRoot("LoginPage");
+    });
+  }
+  
 
   sendContactUs(){
     let loading = this.loadingCtrl.create({

@@ -19,7 +19,7 @@
             <ion-icon name="person"></ion-icon>
             Login
           </button>
-          <button ion-button clear color="danger" *ngIf="uid" (click)="gtLogin()" >
+          <button ion-button clear color="danger" *ngIf="uid" (click)="signOut()" >
             <ion-icon name="person"></ion-icon>
             Sign Out
           </button>
@@ -95,9 +95,9 @@
     </ion-col>
     <ion-col col-6 >
       <ion-card  >
-        <div class="videoCard">
-          <video height="300px" width="100%" controls autoplay>
-            <source src="assets/imgs/91.mp4" type="video/mp4" >
+        <div class="videoCard" (click)="playVid(mainSrc)">
+          <video height="300px" width="100%">
+            <source [src]="mainSrc" type="video/mp4" >
           </video>
         </div>
         <ion-card-content>
@@ -134,11 +134,21 @@
     </ion-col>
     <ion-col col-3 >
       <ion-card>
-        <ion-card-content>
-
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
+        <ion-item color="authHead">Recent Uploads</ion-item>
+        <ion-grid>
+          <ion-row class="authSub" (click)="playVid(vid.File)" *ngFor="let vid of videos">
+            <ion-col col-4>
+            <video class="videoIMG" >
+              <source [src]="vid.File" type="video/mp4" >
+            </video>
+            </ion-col>
+            <ion-col col-8>
+              <h2 class="name" >{{vid.VideoTitle}} </h2>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    </ion-card>
+  </ion-col>
   </ion-row>
   <div class="footerBar">
   <p>© Copy Rights Public Grievances . All Rights Are Reserved 2018</p>

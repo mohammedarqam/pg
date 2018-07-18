@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, ViewController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, IonicPage, ViewController, LoadingController, AlertController, ModalController } from 'ionic-angular';
 import * as firebase from 'firebase';
 
 
@@ -14,18 +14,28 @@ export class SignUpPage {
   email : string;
   Occupation : string;
   phoneNumber : number
+  videos : Array<any> = [];
   public recaptchaVerifier:firebase.auth.RecaptchaVerifier;
   authorityRef = firebase.database().ref("Authorities");
   authorities : Array<any> = [];
+  uid : boolean = false ;
 
 
 
   constructor(
   public viewCtrl : ViewController,
   public loadingCtrl : LoadingController,
+  public modalCtrl: ModalController,
   public alertCtrl : AlertController,
   public navCtrl: NavController) {
-
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.uid = true;
+        this.navCtrl.setRoot("HomePage");
+      }else{
+        this.uid = false;
+      }
+    });
   }
 
   ionViewDidEnter(){
@@ -44,79 +54,18 @@ getAuthorities(){
     this.authorities=[];
     itemSnapshot.forEach(itemSnap =>{
       this.authorities.push(itemSnap.val());
-      console.log(itemSnap.val());
       return false;
     });
   }).then(()=>{
     loading.dismiss();
+  }).then(()=>{
+    this.getVideos();
   }) ;
 
 }
 
 
 
-/*
-signUp1(){
-  let loading = this.loadingCtrl.create({
-    content: 'Please wait...'
-    });
-    loading.present();
-
-    firebase.auth().createUserWithEmailAndPassword(this.email,this.pass).then(()=>{
-      firebase.database().ref("Users/").child(firebase.auth().currentUser.uid).set({
-        Name : this.username,
-        Email : this.email,
-        Pass : this.pass,
-        PhoneNo : this.PhoneNo,
-        Occupation : this.Occupation,
-      }).then(()=>{
-        this.navCtrl.setRoot("UploadPage");
-        loading.dismiss();
-      });
-    }).catch((e)=>{
-      alert(e.message);
-    })
-
-}
-
-
-signUp(){
-  let loading = this.loadingCtrl.create({
-    content: 'Please wait...'
-    });
-    loading.present();
-
-    const appVerifier = this.recaptchaVerifier;
-    const phoneNumberString = "+91" + this.PhoneNo;
-    console.log("Starting to send");
-    firebase.auth().signInWithPhoneNumber(phoneNumberString, appVerifier)
-    .then( confirmationResult => {
-    console.log("OTP Sent");
-      confirmationResult.confirm(this.OTP)
-      .then(function (result) {
-        firebase.database().ref("Users/").child(firebase.auth().currentUser.uid).set({
-          Name : this.username,
-          Email : this.email,
-          Pass : this.pass,
-          PhoneNo : this.PhoneNo,
-          Occupation : this.Occupation,
-        }).then(()=>{
-          this.navCtrl.setRoot("UploadPage");
-          loading.dismiss();
-        });
-      }).catch(function (error) {
-  });
-}).catch(function (error) {
-    alert("SMS not sent");
-  });
-
-
-  
-
-  }
-
-
-*/
 
 
 signIn(phoneNumber: number){
@@ -168,9 +117,23 @@ signIn(phoneNumber: number){
 
 
 
+playVid(srce) {
+  let profileModal = this.modalCtrl.create("VidPlayerPage",{srces : srce});
+  profileModal.present();
+}
 
 
 
+getVideos(){
+  firebase.database().ref("Uploads/Videos/").once('value',itemSnapshot=>{
+    this.videos = [];
+    itemSnapshot.forEach(itemSnap =>{
+      var temp = itemSnap.val();
+      temp.key = itemSnap.key;
+      this.videos.push(temp);
+    });
+  });  
+}
 
 
 
